@@ -21,11 +21,6 @@ variable "private_subnets" {
   }))
 }
 
-variable "cloudwatch_logs_policy" {
-  description = "JSON document for cloudwatch logs policy"
-  type        = string
-}
-
 variable "create_nat_gateway" {
   description = "Whether to create a NAT Gateway"
   type        = bool

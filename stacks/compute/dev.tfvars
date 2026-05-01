@@ -1,0 +1,1 @@
+cloudwatch_logs_policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Resource\":\"*\"},{\"Effect\":\"Allow\",\"Action\":[\"ecr:GetDownloadUrlForLayer\",\"ecr:BatchCheckLayerAvailability\",\"ecr:GetAuthorizationToken\",\"ecr:BatchGetImage\"],\"Resource\":\"*\"}]}"
