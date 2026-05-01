@@ -1,16 +1,16 @@
 resource "aws_vpc" "terraform-vpc" {
   cidr_block           = var.vpc_cidr_block
-  enable_dns_hostnames = var.bool_dns_hostnames
-  enable_dns_support   = var.bool_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support   = var.enable_dns_support
   tags = {
-    Name = var.vpc_name_tag
+    Name = "${var.env}-vpc"
   }
 }
 
 resource "aws_internet_gateway" "terraform-igw" {
   vpc_id = aws_vpc.terraform-vpc.id
   tags = {
-    Name = var.igw_name_tag
+    Name = "igw-${var.env}"
   }
   depends_on = [
     aws_vpc.terraform-vpc

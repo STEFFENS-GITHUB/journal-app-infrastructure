@@ -1,36 +1,30 @@
+# GENERAL VARS 
+
+variable "env" {
+  description = "Environment (dev, prod, staging)"
+  type        = string
+  default     = "dev"
+}
+
 # VPC RESOURCE VARIABLES
 
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
-  default     = "192.168.0.0/16"
 }
 
-variable "bool_dns_hostnames" {
+variable "enable_dns_hostnames" {
   description = "Boolean value for enabling DNS hostname allocation in VPC"
   type        = bool
   default     = true
 }
 
-variable "bool_dns_support" {
+variable "enable_dns_support" {
   description = "Boolean value for enabling DNS resolution support in VPC"
   type        = bool
   default     = true
 }
 
-variable "vpc_name_tag" {
-  description = "Name tag for the VPC"
-  type        = string
-  default     = ""
-}
-
-# IGW VARIABLES
-
-variable "igw_name_tag" {
-  description = "Name tag for the IGW"
-  type        = string
-  default     = ""
-}
 
 # SUBNET VARIABLES
 
