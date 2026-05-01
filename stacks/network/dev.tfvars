@@ -1,5 +1,5 @@
 vpc_cidr_block = "192.168.0.0/16"
-
+env = "dev"
 public_subnets = [
   {
     cidr_block        = "192.168.1.0/24"

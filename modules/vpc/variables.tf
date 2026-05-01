@@ -3,7 +3,6 @@
 variable "env" {
   description = "Environment (dev, prod, staging)"
   type        = string
-  default     = "dev"
 }
 
 # VPC RESOURCE VARIABLES

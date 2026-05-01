@@ -4,4 +4,5 @@ module "vpc" {
   public_subnets     = var.public_subnets
   private_subnets    = var.private_subnets
   create_nat_gateway = var.create_nat_gateway
+  env = var.env
 }
