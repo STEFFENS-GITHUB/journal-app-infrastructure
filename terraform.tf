@@ -4,10 +4,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-remote-backend-2024"
+    bucket         = "dev-terraform-state-476140239102"
     key            = "global/backend/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "tf-backend-state-locking"
+    use_lockfile = true
     encrypt        = true
   }
 }
