@@ -1,6 +1,6 @@
 output "vpc_id" {
   description = "The VPC ID"
-  value       = aws_vpc.terraform-vpc.id
+  value       = aws_vpc.vpc.id
 }
 
 output "public_subnet_ids" {
