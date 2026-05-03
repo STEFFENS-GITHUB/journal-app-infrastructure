@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "dev-terraform-state-476140239102"
-    key            = "global/backend/terraform.tfstate"
+    key            = "backend/network/terraform.tfstate"
     region         = "us-east-1"
     use_lockfile = true
     encrypt        = true

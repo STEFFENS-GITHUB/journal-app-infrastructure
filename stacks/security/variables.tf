@@ -12,8 +12,3 @@ variable "env" {
   description = "Environment (dev, prod, staging)"
   type        = string
 }
-
-variable "rds_kms_key_name" {
-  description = "Key name used in key tag Name and key alias name"
-  type        = string
-}

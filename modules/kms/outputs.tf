@@ -1,6 +1,6 @@
-output "key_id" {
-  description = "The KMS key id"
-  value       = aws_kms_key.kms_key.key_id
+output "key_arn" {
+  description = "The KMS key arn"
+  value       = aws_kms_key.kms_key.arn
 }
 
 output "key_alias" {
