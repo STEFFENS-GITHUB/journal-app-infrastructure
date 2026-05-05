@@ -27,5 +27,5 @@ private_subnets = [
 
 ]
 
-create_nat_gateway = false
+create_nat_gateway = true
 # Replace policy with data source

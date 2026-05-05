@@ -1,1 +1,4 @@
-cloudwatch_logs_policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Resource\":\"*\"},{\"Effect\":\"Allow\",\"Action\":[\"ecr:GetDownloadUrlForLayer\",\"ecr:BatchCheckLayerAvailability\",\"ecr:GetAuthorizationToken\",\"ecr:BatchGetImage\"],\"Resource\":\"*\"}]}"
+env="dev"
+log_group_name = "/ecs/logs/"
+family_name = "journal-app"
+container_image = "steffenp123/journal-app:latest"
