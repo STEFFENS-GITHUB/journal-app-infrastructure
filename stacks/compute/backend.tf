@@ -1,5 +1,12 @@
 provider "aws" {
   region = "us-east-1"
+  profile = "dev"
+}
+
+provider "aws" {
+  alias = "root"
+  region = "us-east-1"
+  profile = "root"
 }
 
 terraform {
