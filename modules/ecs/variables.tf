@@ -41,26 +41,26 @@ variable "family_name" {
 variable "task_definition_memory" {
   description = "task definition memory in bits/units (ie 512)"
   type        = string
-  default = "1024"
+  default     = "1024"
 }
 
 variable "task_definition_cpu" {
   description = "task definition CPU in bits/units (ie 512)"
   type        = string
-  default = "512"
+  default     = "512"
 }
 
 variable "container_definitions" {
   description = "A JSON string of the container definitions for ECS to run"
-  type = string
+  type        = string
 }
 
 variable "ecs_service_security_group_ids" {
   description = "A list of security group ids for ECS service"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "target_group_arn" {
   description = "The ARN of the target group to register the ECS service with"
-  type = string
+  type        = string
 }

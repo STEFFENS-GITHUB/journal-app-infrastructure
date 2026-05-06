@@ -7,25 +7,25 @@
 variable "storage_type" {
   description = "Database storage type (ie. gp2)"
   type        = string
-  default = "gp3"
+  default     = "gp3"
 }
 
 variable "allocated_storage" {
   description = "Number of gigs of storage in DB"
   type        = number
-  default = 20
+  default     = 20
 }
 
 variable "publicly_accessible" {
   description = "Whether the database is publicly accessible or not"
   type        = bool
-  default = false
+  default     = false
 }
 
 variable "skip_final_snapshot" {
   description = "Skip creating a final snapshot before deletion"
   type        = bool
-  default = false
+  default     = false
 }
 
 # MANDATORY VARS
@@ -56,21 +56,21 @@ variable "db_name" {
 }
 
 variable "rds_master_user_key_arn" {
-    description = "ARN of the KMS Master User Key"
-    type = string
+  description = "ARN of the KMS Master User Key"
+  type        = string
 }
 
 variable "rds_key_arn" {
-    description = "ARN of the KMS Master User Key"
-    type = string
+  description = "ARN of the KMS Master User Key"
+  type        = string
 }
 
 variable "subnet_ids" {
-    description = "A list of subnet IDs for the DB subnet group"
-    type = list(string)
+  description = "A list of subnet IDs for the DB subnet group"
+  type        = list(string)
 }
 
 variable "db_security_group_ids" {
-    description = "A list of security group ids to be applied to the database"
-    type = list(string)
+  description = "A list of security group ids to be applied to the database"
+  type        = list(string)
 }

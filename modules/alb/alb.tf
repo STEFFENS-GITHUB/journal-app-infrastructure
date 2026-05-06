@@ -5,7 +5,7 @@ resource "aws_lb" "load_balancer" {
   security_groups    = var.alb_security_group_ids
   subnets            = var.public_subnet_ids
   tags = {
-    Name = "alb-${var.env}"
+    Name        = "alb-${var.env}"
     Environment = var.env
   }
 }
@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "target_group" {
   target_type = "ip"
 
   tags = {
-    Name = "target-group-${var.env}"
+    Name        = "target-group-${var.env}"
     Environment = var.env
   }
   lifecycle {

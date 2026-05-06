@@ -10,10 +10,10 @@ variable "log_group_name" {
 
 variable "family_name" {
   description = "Family name for ECS task and container"
-  type = string
+  type        = string
 }
 
 variable "container_image" {
   description = "Container image name"
-  type = string
+  type        = string
 }

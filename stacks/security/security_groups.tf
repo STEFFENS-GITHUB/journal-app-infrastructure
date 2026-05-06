@@ -1,12 +1,12 @@
 resource "aws_security_group" "rds_security_group" {
-    name = "rds-sg-${var.env}"
-    vpc_id = data.terraform_remote_state.network_state.outputs.vpc_id
+  name   = "rds-sg-${var.env}"
+  vpc_id = data.terraform_remote_state.network_state.outputs.vpc_id
 
-    ingress {
-        from_port   = 3306
-        to_port     = 3306
-        protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"] # Replace this with ECS SG later, I believe
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace this with ECS SG later, I believe
   }
 }
 

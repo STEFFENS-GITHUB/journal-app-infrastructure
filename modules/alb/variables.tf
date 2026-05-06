@@ -14,9 +14,9 @@ variable "private_subnet_ids" {
 }
 
 variable "internal" {
-    description = "Flag for whether ALB is internal only or not"
-    type = bool
-    default = false
+  description = "Flag for whether ALB is internal only or not"
+  type        = bool
+  default     = false
 }
 
 variable "env" {

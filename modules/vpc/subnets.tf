@@ -9,9 +9,9 @@ resource "aws_subnet" "public_subnets" {
   vpc_id                  = aws_vpc.vpc.id
 
   tags = {
-    Tier = "public"
+    Tier        = "public"
     Environment = var.env
-    Name = "${var.env}-public-subnet-${each.key}"
+    Name        = "${var.env}-public-subnet-${each.key}"
   }
 
   depends_on = [
@@ -29,9 +29,9 @@ resource "aws_subnet" "private_subnets" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Tier = "private"
+    Tier        = "private"
     Environment = var.env
-    Name = "${var.env}-private-subnet-${each.key}"
+    Name        = "${var.env}-private-subnet-${each.key}"
   }
 
   depends_on = [

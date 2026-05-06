@@ -1,7 +1,7 @@
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "ecs-cluster-${var.env}"
-    tags = {
-      Environment = var.env
+  tags = {
+    Environment = var.env
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_definitions    = var.container_definitions
   tags = {
-      Environment = var.env
+    Environment = var.env
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_ecs_service" "ecs_service" {
   name            = "ecs-service-${var.env}"
   cluster         = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
-  desired_count   = 1 # Review auto scaling for ECS later
+  desired_count   = 1         # Review auto scaling for ECS later
   launch_type     = "FARGATE" # May eventually add EC2 compatability, but fargate only for now
 
   network_configuration {
@@ -35,7 +35,7 @@ resource "aws_ecs_service" "ecs_service" {
     container_port   = 8000 # Modularize later
   }
   tags = {
-     Environment = var.env
+    Environment = var.env
   }
 }
 

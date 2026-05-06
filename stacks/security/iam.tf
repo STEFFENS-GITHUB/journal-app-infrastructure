@@ -4,10 +4,10 @@ data "aws_iam_policy_document" "rds_kms_policy" {
   statement {
     sid = "AllowAccountAdmin"
     principals {
-      type = "AWS"
+      type        = "AWS"
       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current_identity.account_id}:root"]
     }
-    actions = ["kms:*"]
+    actions   = ["kms:*"]
     resources = ["*"]
   }
 
@@ -31,10 +31,10 @@ data "aws_iam_policy_document" "rds_master_user_kms_policy" {
   statement {
     sid = "AllowAccountAdmin"
     principals {
-      type = "AWS"
+      type        = "AWS"
       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current_identity.account_id}:root"]
     }
-    actions = ["kms:*"]
+    actions   = ["kms:*"]
     resources = ["*"]
   }
 
@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "ecs_execution_permissions_policy_document" {
 
     resources = ["*"] # More specific
   }
-    statement {
+  statement {
     effect = "Allow"
     actions = [
       "kms:Decrypt",
@@ -123,11 +123,11 @@ data "aws_iam_policy_document" "ecs_task_policy_document" {
 }
 
 resource "aws_iam_policy" "ecs_execution_policy" {
-  name = "ecs-execution-policy"
-  policy      = data.aws_iam_policy_document.ecs_execution_permissions_policy_document.json
+  name   = "ecs-execution-policy"
+  policy = data.aws_iam_policy_document.ecs_execution_permissions_policy_document.json
 }
 
 resource "aws_iam_policy" "ecs_task_policy" {
-  name = "ecs-task-policy"
-  policy      = data.aws_iam_policy_document.ecs_task_policy_document.json
+  name   = "ecs-task-policy"
+  policy = data.aws_iam_policy_document.ecs_task_policy_document.json
 }

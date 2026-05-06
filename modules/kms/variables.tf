@@ -3,13 +3,13 @@
 variable "deletion_window_in_days" {
   description = "KMS key deletion window specified in days"
   type        = number
-  default = 30
+  default     = 30
 }
 
 variable "enable_key_rotation" {
   description = "KMS key bool flag to enable key rotation"
   type        = bool
-  default = false
+  default     = false
 }
 
 # MANDATORY VARS
