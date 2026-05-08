@@ -17,3 +17,8 @@ variable "container_image" {
   description = "Container image name"
   type        = string
 }
+
+variable "domain_name" {
+  description = "Root domain name for the app"
+  type        = string
+}

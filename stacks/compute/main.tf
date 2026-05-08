@@ -59,5 +59,15 @@ module "ecs" {
   ])
 }
 
+resource "aws_route53_record" "app_record" {
+  zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
+  name = "${var.env}.${var.domain_name}"
+  type    = "A"
 
+  alias {
+    name                   = module.alb.alb_dns_name
+    zone_id                = module.alb.alb_zone_id
+    evaluate_target_health = true
+  }
+}
 

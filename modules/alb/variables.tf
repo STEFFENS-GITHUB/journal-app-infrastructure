@@ -28,3 +28,8 @@ variable "alb_security_group_ids" {
   description = "A list of security group IDs for the ALB"
   type        = list(string)
 }
+
+variable "certificate_arn" {
+  description = "ACM cert arn"
+  type        = string
+}

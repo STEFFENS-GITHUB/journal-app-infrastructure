@@ -18,13 +18,3 @@ terraform {
     encrypt      = true
   }
 }
-
-data "terraform_remote_state" "compute_state" {
-  backend = "s3"
-
-  config = {
-    bucket = "dev-terraform-state-476140239102"
-    key    = "backend/compute/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
