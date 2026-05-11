@@ -48,3 +48,13 @@ data "terraform_remote_state" "database_state" {
     region = "us-east-1"
   }
 }
+
+data "terraform_remote_state" "dns_state" {
+  backend = "s3"
+
+  config = {
+    bucket = "dev-terraform-state-476140239102"
+    key    = "backend/dns/terraform.tfstate"
+    region = "us-east-1"
+  }
+}

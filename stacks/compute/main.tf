@@ -5,6 +5,7 @@ module "alb" {
   private_subnet_ids     = data.terraform_remote_state.network_state.outputs.private_subnet_ids
   env                    = var.env
   alb_security_group_ids = data.terraform_remote_state.security_state.outputs.alb_security_group_ids
+  certificate_arn = data.terraform_remote_state.dns_state.outputs.acm_certificate_arn
 }
 
 module "ecs" {
