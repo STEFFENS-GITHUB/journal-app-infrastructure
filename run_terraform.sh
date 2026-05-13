@@ -8,11 +8,11 @@ fi
 
 # Verify either "apply" or "destroy" was passed in
 if [ -z "$2" ]; then
-    echo "Usage: $0 {apply|destroy}"
+    echo "Usage: $0 {apply|destroy|init}"
     exit 1
-elif [ "$2" != "apply" ] && [ "$2" != "destroy" ]; then
+elif [ "$2" != "apply" ] && [ "$2" != "destroy" ] && [ "$2" != "init" ]; then
     echo "Invalid action: $2"
-    echo "Usage: $0 {apply|destroy}"
+    echo "Usage: $0 {apply|destroy|init}"
     exit 1
 fi
 
@@ -29,6 +29,8 @@ cd "$1" || exit 1
 # Run the apply or destroy
 if [ "$2" == "apply" ]; then
     terraform apply -var-file=$VARS_FILE
+elif [ "$2" == "init" ]; then
+    terraform init
 elif [ "$2" == "destroy" ]; then
     terraform destroy -var-file=$VARS_FILE -refresh=false
 fi
