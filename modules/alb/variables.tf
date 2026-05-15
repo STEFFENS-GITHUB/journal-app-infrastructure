@@ -30,6 +30,6 @@ variable "alb_security_group_ids" {
 }
 
 variable "certificate_arn" {
-  description = "ACM cert arn"
+  description = "ACM cert arn for ALB SSL/TLS termination"
   type        = string
 }

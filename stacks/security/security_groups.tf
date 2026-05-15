@@ -1,3 +1,4 @@
+
 resource "aws_security_group" "rds_security_group" {
   name   = "rds-sg-${var.env}"
   vpc_id = data.terraform_remote_state.network_state.outputs.vpc_id
@@ -18,13 +19,7 @@ resource "aws_security_group" "alb_security_group" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudfront.id]
   }
   egress { # Verify if this is necessary. Does it auto create this egress, or no?
     from_port   = 0

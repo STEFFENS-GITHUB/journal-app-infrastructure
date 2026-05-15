@@ -15,3 +15,7 @@ module "rds_master_user_kms_key" {
   key_name                = "rds-master-user-key"
   key_policy              = data.aws_iam_policy_document.rds_master_user_kms_policy.json
 }
+
+data "aws_ec2_managed_prefix_list" "cloudfront" {
+  name = "com.amazonaws.global.cloudfront.origin-facing"
+}
