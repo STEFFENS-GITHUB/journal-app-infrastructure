@@ -1,4 +1,8 @@
-variable "origin_id" {
+variable "default_origin_id" {
+    type = string
+}
+
+variable "apigw_origin_id" {
     type = string
 }
 

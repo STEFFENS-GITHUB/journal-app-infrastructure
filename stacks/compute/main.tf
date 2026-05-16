@@ -70,19 +70,26 @@ resource "aws_acm_certificate" "origin_acm_certificate" {
 }
 
 resource "aws_route53_record" "acm_validation_record" {
+    for_each = {
+        for dvo in aws_acm_certificate.origin_acm_certificate.domain_validation_options : dvo.domain_name => {
+            name   = dvo.resource_record_name
+            type   = dvo.resource_record_type
+            record = dvo.resource_record_value
+        }
+    }
+
     zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
-    name = tolist(aws_acm_certificate.origin_acm_certificate.domain_validation_options)[0].resource_record_name
-    type = tolist(aws_acm_certificate.origin_acm_certificate.domain_validation_options)[0].resource_record_type
     ttl = 60
-    records = [tolist(aws_acm_certificate.origin_acm_certificate.domain_validation_options)[0].resource_record_value]
+    name = each.value.name
+    type = each.value.type
+    allow_overwrite = true
+    records = [each.value.record]
 }
 
 resource "aws_acm_certificate_validation" "acm_certificate_validation" {
   certificate_arn = aws_acm_certificate.origin_acm_certificate.arn
 
-  validation_record_fqdns = [
-    aws_route53_record.acm_validation_record.fqdn
-  ]
+  validation_record_fqdns = [for record in aws_route53_record.acm_validation_record : record.fqdn]
 }
 
 resource "aws_route53_record" "origin_record" {
