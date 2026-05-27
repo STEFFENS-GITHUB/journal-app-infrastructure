@@ -16,6 +16,11 @@ module "rds_master_user_kms_key" {
   key_policy              = data.aws_iam_policy_document.rds_master_user_kms_policy.json
 }
 
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
+}
+
 data "aws_ec2_managed_prefix_list" "cloudfront" {
   name = "com.amazonaws.global.cloudfront.origin-facing"
 }

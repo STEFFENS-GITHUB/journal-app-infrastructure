@@ -11,3 +11,18 @@ module "rds_instance" {
   skip_final_snapshot     = var.skip_final_snapshot
   env                     = var.env
 }
+
+resource "aws_s3_bucket" "display_get_bucket" {
+  bucket = "display-get-lambda-bucket"
+  force_destroy = true
+  tags = {
+    Environment = var.env
+  }
+}
+
+resource "aws_s3_bucket_versioning" "display_get_bucket" {
+  bucket = aws_s3_bucket.display_get_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}

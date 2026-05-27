@@ -80,7 +80,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   }
 
   origin {
-    domain_name = "notmadeyet.steffenaws.com" #data.terraform_remote_state.compute_state.outputs.origin_record_fqdn
+    domain_name = data.terraform_remote_state.compute_state.outputs.api_gateway_invoke_domain
     origin_id   = "${var.apigw_origin_id}-${var.env}"
     origin_path = "/${var.env}"
     custom_origin_config {
@@ -107,7 +107,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     viewer_protocol_policy   = "redirect-to-https"
     cache_policy_id          = data.aws_cloudfront_cache_policy.caching_disabled.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer_except_host.id
-    path_pattern             = "/api/lambda/*"
+    path_pattern             = "/api/display"
   }
 
   viewer_certificate {

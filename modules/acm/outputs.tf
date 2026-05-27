@@ -3,5 +3,5 @@ output "acm_certificate_validation_arn" {
 }
 
 output "fqdn" {
-    value = "${var.domain_name_prefix}.${var.env}.${var.domain_name}"
+    value = "${var.domain_name_prefix}${var.env}.${var.domain_name}"
 }

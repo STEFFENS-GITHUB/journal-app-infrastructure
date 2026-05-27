@@ -13,7 +13,7 @@ module "ecs" {
   vpc_id                         = data.terraform_remote_state.network_state.outputs.vpc_id
   public_subnet_ids              = data.terraform_remote_state.network_state.outputs.public_subnet_ids
   private_subnet_ids             = data.terraform_remote_state.network_state.outputs.private_subnet_ids
-  log_group_name                 = var.log_group_name
+  log_group_name                 = var.ecs_log_group_name
   env                            = var.env
   ecs_execution_policy_arn       = data.terraform_remote_state.security_state.outputs.ecs_execution_policy_arn
   ecs_task_policy_arn            = data.terraform_remote_state.security_state.outputs.ecs_task_policy_arn
@@ -35,23 +35,23 @@ module "ecs" {
       secrets = [
         {
           name      = "DB_MASTER_SECRET"
-          valueFrom = data.terraform_remote_state.database_state.outputs.db_secret_arn
+          valueFrom = data.terraform_remote_state.storage_state.outputs.db_secret_arn
         }
       ]
       environment = [
         {
           name  = "DB_ENDPOINT"
-          value = data.terraform_remote_state.database_state.outputs.db_endpoint
+          value = data.terraform_remote_state.storage_state.outputs.db_endpoint
         },
         {
           name  = "DB_NAME"
-          value = data.terraform_remote_state.database_state.outputs.db_name
+          value = data.terraform_remote_state.storage_state.outputs.db_name
         }
       ]
       logConfiguration = { # Modularize at later date 
         logDriver = "awslogs"
         options = {
-          awslogs-group         = var.log_group_name
+          awslogs-group         = var.ecs_log_group_name
           awslogs-region        = "us-east-1"
           awslogs-stream-prefix = "journal-app"
         }
@@ -80,3 +80,80 @@ resource "aws_route53_record" "origin_record" {
   }
 }
 
+# Figure out alias + versions later
+resource "aws_lambda_function" "display_get_lambda" {
+  function_name = "display-get-lambda"
+  role = aws_iam_role.display_get_lambda_execution_role.arn
+  handler = "main.lambda_handler"
+  runtime = "python3.9"
+  s3_bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
+  s3_key = "latest.zip"
+  tags = {
+    Environment = var.env
+  }
+}
+
+resource "aws_lambda_permission" "display_get_allow_apigw" {
+  statement_id  = "AllowAPIGatewayInvokeDisplayGet"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.display_get_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/*"
+}
+
+resource "aws_api_gateway_rest_api" "api_gateway"{
+  name = "api-gateway-${var.env}"
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+
+resource "aws_api_gateway_resource" "api" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  parent_id = aws_api_gateway_rest_api.api_gateway.root_resource_id
+  path_part = "api"
+}
+
+resource "aws_api_gateway_resource" "display" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  parent_id = aws_api_gateway_resource.api.id
+  path_part = "display"
+}
+
+resource "aws_api_gateway_method" "display_get" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  resource_id = aws_api_gateway_resource.display.id
+  http_method = "GET"
+  authorization = "NONE" # Later only allow CloudFront
+}
+
+resource "aws_api_gateway_integration" "display_get" {
+  type = "AWS_PROXY"
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  resource_id = aws_api_gateway_resource.display.id
+  http_method = aws_api_gateway_method.display_get.http_method
+
+  integration_http_method = "POST"
+  uri = aws_lambda_function.display_get_lambda.invoke_arn
+}
+
+resource "aws_api_gateway_deployment" "api_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  triggers = {
+    resource_api    = jsonencode(aws_api_gateway_resource.api)
+    resource_display   = jsonencode(aws_api_gateway_resource.display)
+    method      = jsonencode(aws_api_gateway_method.display_get)
+    integration = jsonencode(aws_api_gateway_integration.display_get)
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+}
+
+resource "aws_api_gateway_stage" "api_stage" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  deployment_id = aws_api_gateway_deployment.api_deployment.id
+  stage_name = var.env
+}

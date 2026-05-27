@@ -39,12 +39,12 @@ data "terraform_remote_state" "security_state" {
   }
 }
 
-data "terraform_remote_state" "database_state" {
+data "terraform_remote_state" "storage_state" {
   backend = "s3"
 
   config = {
     bucket = "dev-terraform-state-476140239102"
-    key    = "backend/database/terraform.tfstate"
+    key    = "backend/storage/terraform.tfstate"
     region = "us-east-1"
   }
 }

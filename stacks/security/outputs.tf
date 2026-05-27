@@ -25,3 +25,11 @@ output "ecs_task_policy_arn" {
 output "ecs_execution_policy_arn" {
   value = aws_iam_policy.ecs_execution_policy.arn
 }
+
+output "display_get_execution_policy_arn" {
+  value = aws_iam_policy.display_get_execution_policy.arn 
+}
+
+output "github_actions_role_arn" {
+  value = aws_iam_role.github_actions_role.arn
+}

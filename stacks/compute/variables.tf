@@ -3,7 +3,7 @@ variable "env" {
   type        = string
 }
 
-variable "log_group_name" {
+variable "ecs_log_group_name" {
   description = "Log group name for ECS"
   type        = string
 }
