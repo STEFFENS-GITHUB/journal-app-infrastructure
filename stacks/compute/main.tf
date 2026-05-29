@@ -65,11 +65,11 @@ module "origin_acm_certificate" {
     env = var.env
     domain_name = var.domain_name
     domain_name_prefix = "origin."
-    hosted_zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
+    hosted_zone_id = data.terraform_remote_state.bootstrap_state.outputs.dev_hosted_zone_id
 }
 
 resource "aws_route53_record" "origin_record" {
-  zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
+  zone_id = data.terraform_remote_state.bootstrap_state.outputs.dev_hosted_zone_id
   name = module.origin_acm_certificate.fqdn
   type    = "A"
 
@@ -77,6 +77,16 @@ resource "aws_route53_record" "origin_record" {
     name                   = module.alb.alb_dns_name
     zone_id                = module.alb.alb_zone_id
     evaluate_target_health = true
+  }
+}
+
+resource "aws_s3_object" "lambda_placeholder" {
+  bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
+  key    = "latest.zip"
+  source = "${path.module}/placeholder.zip"
+
+  lifecycle {
+    ignore_changes = all  # Lambda repo owns this object after initial creation
   }
 }
 
@@ -88,6 +98,7 @@ resource "aws_lambda_function" "display_get_lambda" {
   runtime = "python3.9"
   s3_bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
   s3_key = "latest.zip"
+  depends_on = [aws_s3_object.lambda_placeholder]
   tags = {
     Environment = var.env
   }

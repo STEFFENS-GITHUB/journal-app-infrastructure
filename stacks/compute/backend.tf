@@ -43,12 +43,12 @@ data "terraform_remote_state" "storage_state" {
   }
 }
 
-data "terraform_remote_state" "dns_state" {
+data "terraform_remote_state" "bootstrap_state" {
   backend = "s3"
 
   config = {
     bucket = "dev-terraform-state-476140239102"
-    key    = "backend/dns/terraform.tfstate"
+    key    = "backend/bootstrap/terraform.tfstate"
     region = "us-east-1"
   }
 }

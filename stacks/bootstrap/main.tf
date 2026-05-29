@@ -17,3 +17,8 @@ resource "aws_route53_record" "delegation_record" {
 
   records = aws_route53_zone.dev_hosted_zone.name_servers
 }
+
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
+}

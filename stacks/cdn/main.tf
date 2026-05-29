@@ -132,11 +132,11 @@ module "cdn_acm_certificate" {
   source         = "../../modules/acm"
   env            = var.env
   domain_name    = var.domain_name
-  hosted_zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
+  hosted_zone_id = data.terraform_remote_state.bootstrap_state.outputs.dev_hosted_zone_id
 }
 
 resource "aws_route53_record" "cdn_record" {
-  zone_id = data.terraform_remote_state.dns_state.outputs.dev_hosted_zone_id
+  zone_id = data.terraform_remote_state.bootstrap_state.outputs.dev_hosted_zone_id
   name    = "${var.env}.${var.domain_name}"
   type    = "A"
 
