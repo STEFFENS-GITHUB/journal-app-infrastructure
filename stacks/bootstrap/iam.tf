@@ -80,7 +80,7 @@ data "aws_iam_policy_document" "infra_deploy_trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:STEFFENS-GITHUB/journal-app-infra:*"]
+      values   = ["repo:STEFFENS-GITHUB/journal-app-infrastructure:*"]
     }
   }
 }
