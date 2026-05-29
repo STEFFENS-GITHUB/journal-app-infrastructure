@@ -6,7 +6,7 @@ if [ -z "$1" ] || [ ! -d "$1" ]; then
     exit 1
 fi
 
-# Verify either "apply" or "destroy" was passed in
+# Verify either "apply, destroy, or init" was passed in
 if [ -z "$2" ]; then
     echo "Usage: $0 {apply|destroy|init}"
     exit 1

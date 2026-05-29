@@ -3,12 +3,6 @@ provider "aws" {
   profile = "dev"
 }
 
-provider "aws" {
-  alias   = "root"
-  region  = "us-east-1"
-  profile = "root"
-}
-
 terraform {
   backend "s3" {
     bucket       = "dev-terraform-state-476140239102"
