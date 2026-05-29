@@ -1,6 +1,5 @@
 provider "aws" {
   region  = "us-east-1"
-  profile = "dev"
 }
 
 terraform {
@@ -13,7 +12,7 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "dns_state" {
+data "terraform_remote_state" "bootstrap_state" {
   backend = "s3"
 
   config = {
