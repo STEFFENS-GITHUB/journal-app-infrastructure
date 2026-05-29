@@ -39,7 +39,7 @@ jobs:
       run: terraform -chdir=stacks/${{matrix.stack}} validate
 
     - name: Terraform Plan
-      run: terraform -chdir=stacks/${{matrix.stack}} plan -no-color -out=tfplan
+      run: terraform -chdir=stacks/${{matrix.stack}} plan -var-file=dev.tfvars -no-color -out=tfplan
 
     - name: Terraform Apply
       run: terraform -chdir=stacks/${{matrix.stack}} apply -auto-approve tfplan
