@@ -95,6 +95,7 @@ resource "aws_lambda_function" "display_get_lambda" {
   function_name = "display-get-lambda"
   role = aws_iam_role.display_get_lambda_execution_role.arn
   handler = "main.lambda_handler"
+  publish = true
   runtime = "python3.9"
   s3_bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
   s3_key = "latest.zip"
@@ -106,7 +107,6 @@ resource "aws_lambda_function" "display_get_lambda" {
     Environment = var.env
   }
 }
-
 
 resource "aws_lambda_alias" "prod" {
   name             = "prod"
