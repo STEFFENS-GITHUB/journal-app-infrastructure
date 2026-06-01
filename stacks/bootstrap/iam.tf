@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "journal_lambda_deploy_permissions" {
 
   statement {
     effect    = "Allow"
-    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunction"]
+    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunction","lambda:UpdateFunctionConfiguration","lambda:GetFunctionConfiguration","lambda:UpdateAlias"]
     resources = ["arn:aws:lambda:*:*:function:display-get-lambda"]
   }
 }
