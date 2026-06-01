@@ -96,7 +96,7 @@ resource "aws_lambda_function" "display_get_lambda" {
   role = aws_iam_role.display_get_lambda_execution_role.arn
   handler = "main.lambda_handler"
   publish = true
-  runtime = "python3.9"
+  runtime = "python3.12"
   s3_bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
   s3_key = "latest.zip"
   depends_on = [aws_s3_object.lambda_placeholder]

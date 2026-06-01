@@ -33,14 +33,19 @@ data "aws_iam_policy_document" "journal_lambda_deploy_permissions" {
 
   statement {
     effect    = "Allow"
-    actions   = ["s3:PutObject"]
+    actions   = ["s3:PutObject","s3:GetObject"]
     resources = ["arn:aws:s3:::display-get-lambda-*/*"]
   }
 
   statement {
     effect    = "Allow"
-    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunction","lambda:UpdateFunctionConfiguration","lambda:GetFunctionConfiguration","lambda:UpdateAlias"]
+    actions   = ["lambda:UpdateFunctionCode", "lambda:GetFunction", "lambda:UpdateFunctionConfiguration", "lambda:GetFunctionConfiguration", "lambda:UpdateAlias"]
     resources = ["arn:aws:lambda:*:*:function:display-get-lambda"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["lambda:PublishLayerVersion", "lambda:GetLayerVersion"]
+    resources = ["arn:aws:lambda:*:*:layer:display-get-lambda-deps", "arn:aws:lambda:*:*:layer:display-get-lambda-deps:*"]
   }
 }
 
