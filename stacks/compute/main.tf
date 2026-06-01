@@ -99,8 +99,22 @@ resource "aws_lambda_function" "display_get_lambda" {
   s3_bucket = data.terraform_remote_state.storage_state.outputs.display_get_bucket_id
   s3_key = "latest.zip"
   depends_on = [aws_s3_object.lambda_placeholder]
+  lifecycle {
+    ignore_changes = [layers]
+  }
   tags = {
     Environment = var.env
+  }
+}
+
+
+resource "aws_lambda_alias" "prod" {
+  name             = "prod"
+  function_name    = aws_lambda_function.display_get_lambda.function_name
+  function_version = "1"
+
+  lifecycle {
+    ignore_changes = [function_version]
   }
 }
 
